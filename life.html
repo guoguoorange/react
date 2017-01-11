@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>点击改变名字</title>
+    <script src="node_modules/react/dist/react.js"></script>
+    <script src="node_modules/react-dom/dist/react-dom.js"></script>
+    <script src="node_modules/babel-standalone/babel.js"></script>
+</head>
+<body>
+<div id="root"></div>
+上一篇：已经是第一篇了
+下一篇：<a href="changetime.html">时间改变</a>
+<script type="text/babel">
+    class Life extends React.Component{
+        constructor(){
+            super();
+            this.state={text:"初始值"};
+        }
+        componentWillMount(){
+            /*组件即将装配到页面当中*/
+            console.log("组件即将装配到页面当中")
+        }
+        componentWillUpdate(){
+            /*组件即将更新到页面当中*/
+            console.log("组件即将更新到页面当中")
+        }
+        componentDidUpdate(){
+            /*组件已经更新到页面当中*/
+            console.log("组件已经更新到页面当中")
+        }
+        componentDidMount(){
+            /*组件已经装配到页面当中*/
+           console.log("组件已经装配到页面当中")
+        }
+        click(){
+           this.setState({text:"更新的值"})
+        }
+        render(){
+            console.log("正在渲染")
+            return(
+                    <div onClick={this.click.bind(this)}>
+                        <Son attr={this.state.text}></Son>
+                    </div>
+            )
+        }
+    }
+    class Son extends React.Component{
+        constructor(){
+            super();
+        }
+        shouldComponentUpdate(){
+            console.log("确定要更新吗")
+            if(confirm("确定要更新吗")){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        componentWillReceiveProps(){
+            console.log("子元素的属性即将发生改变")
+        }
+        render(){
+            return(
+                    <div>{this.props.attr}</div>
+            )
+        }
+    }
+    ReactDOM.render(<Life/>,document.getElementById("root"))
+</script>
+</body>
+</html>
